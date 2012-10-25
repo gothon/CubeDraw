@@ -1,0 +1,35 @@
+[Project]
+Version=3
+Description=Volumetric Paint Program
+Api=fb (FreeBASIC)
+Grouping=1
+AddMainFiles=1
+AddModuleFiles=1
+ResExport=
+CompileIfNewer=0
+IncVersion=0
+RunCmd=0
+[Make]
+Module=Module Build,fbc -c
+Recompile=2
+Current=3
+1=Windows Console (debug),fbc -g -s console -i "E:\Dev\FreeBasic\VoxelEngine\VoxelGFX\Src" -p "E:\Dev\FreeBasic\VoxelEngine\VoxelGFX\Lib"
+2=Windows GUI (GCC),fbc -s gui -gen gcc -R -Wc -O2 -i "E:\Dev\FreeBasic\VoxelEngine\VoxelGFX\Src" -p "E:\Dev\FreeBasic\VoxelEngine\VoxelGFX\Lib"
+3=Windows GUI,fbc -s gui -i "E:\Dev\FreeBasic\VoxelEngine\VoxelGFX\Src" -p "E:\Dev\FreeBasic\VoxelEngine\VoxelGFX\Lib"
+Output=
+Run=
+Delete=
+[TabOrder]
+TabOrder=
+[File]
+1=CubeDraw.bas
+1001=modGUI.bas
+2=modGUI.bi
+1002=modModel.bas
+3=modModel.bi
+[BreakPoint]
+1=
+2=
+1001=
+1002=
+3=
