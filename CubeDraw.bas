@@ -252,7 +252,7 @@ Sub VoxelEditor.Render()
         End If
     End If
     
-    If Focus = FocusHovBox Then
+    If Focus = FocusHovBox And HovV <> Vec3I(-1,-1,-1) Then
         glEnable GL_RESCALE_NORMAL
         glScaled 0.25, 0.25, 0.25
         glTranslated HovV.X*4, HovV.Y*4, HovV.Z*4
@@ -525,7 +525,7 @@ Scope
             End If
         End If
         
-        If VE.Focus = VE.FocusHovBox Then
+        If VE.Focus = VE.FocusHovBox And VE.HovV <> Vec3I(-1,-1,-1) Then
             SDL_WM_SetCaption VE.ModelSize & " " & FileName & " " & VE.HovV, ""
            Else
             SDL_WM_SetCaption VE.ModelSize & " " & FileName, ""
@@ -603,7 +603,7 @@ Scope
                             End If
                             If VE.Focus = VE.FocusHovBox And VE.BtnBar.Down = 3 Then 'And (VE.BuildMode = 0 Or VE.ColSel.SelColor = 0) Then
                                 Dim As Double Dist = -1 'Draw on surface when left button is down
-                                Dim As Vec3I V1, V2
+                                Dim As Vec3I V1 = Vec3I(-1,-1,-1), V2 = Vec3I(-1,-1,-1)
                                 VoxSetVolume VOXEL_SCREEN
                                 VSet VE.HovV, VE.HovCol
                                 VoxGlRenderState 0, 0, VOXEL_MODELVIEW
