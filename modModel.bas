@@ -121,6 +121,115 @@ Sub Vox_Model.Rotate(Angle As Double, N As Vec3I)
     Rotate Angle, N.X, N.Y, N.Z
 End Sub
 
+Sub Vox_Font.SetFont(Vol As Vox_Volume)
+    VolFont = Vol
+    SrcCharSize = VoxGetVolumeSize(Vol)
+    SrcCharSize.X \= 16
+    SrcCharSize.Y \= 16
+    DestCharSize = SrcCharSize
+End Sub
+
+Sub Vox_Font.SetForeColor(ByVal Col As UInteger)
+    ForeColor = SwapRB(ForeColor)
+    Col = SwapRB(Col)
+    VoxSetVolume VolFont
+    VoxVolumeLock
+    Var P = VoxVolumePtr
+    For I As Integer = 0 To SrcCharSize.X*SrcCharSize.Y*SrcCharSize.Z*256-1
+        If *P = ForeColor Then *P = Col
+        P += 1
+    Next I
+    VoxVolumeUnlock
+    ForeColor = SwapRB(Col)
+End Sub
+
+Sub Vox_Font.Bold
+    ForeColor = SwapRB(ForeColor)
+    VoxSetVolume VolFont
+    VoxVolumeLock
+    Var P = VoxVolumePtr
+    For I As Integer = 0 To SrcCharSize.X*SrcCharSize.Y*SrcCharSize.Z*256-1
+        If *P <> 0 Then *P = ForeColor
+        P += 1
+    Next I
+    VoxVolumeUnlock
+    ForeColor = SwapRB(ForeColor)
+End Sub
+
+Sub Vox_Font.Italize
+    Var Temp = VoxNewVolume((3*SrcCharSize.X\2)*16, SrcCharSize.Y*16, SrcCharSize.Z)
+    VoxSetSource VolFont
+    
+    'For Y = 0 To SrcCharSize.Y*16
+    'Next Y
+    VoxSizeVolume 0, 0, 0
+End Sub
+
+Sub Vox_Font.Underline
+    VoxSetVolume VolFont
+    VoxSetColor ForeColor
+    VoxVolumeLock
+    For Y As Integer = 0 To 15
+        VoxTriangle Vec3I(0, Y*SrcCharSize.Y, 0), Vec3I(16*SrcCharSize.X-1, Y*SrcCharSize.Y, 0), Vec3I(0, Y*SrcCharSize.Y, SrcCharSize.Z-1)
+        VoxTriangleFanTo Vec3I(16*SrcCharSize.X-1, Y*SrcCharSize.Y, SrcCharSize.Z-1)
+    Next Y
+    VoxVolumeUnlock
+End Sub
+
+Sub Vox_Font.StrikeThrough
+    VoxSetVolume VolFont
+    VoxSetColor ForeColor
+    VoxVolumeLock
+    For Y As Integer = 0 To 15
+        VoxTriangle Vec3I(0, Y*SrcCharSize.Y+SrcCharSize.Y\2, 0), Vec3I(16*SrcCharSize.X-1, Y*SrcCharSize.Y+SrcCharSize.Y\2, 0), Vec3I(0, Y*SrcCharSize.Y+SrcCharSize.Y\2, SrcCharSize.Z-1)
+        VoxTriangleFanTo Vec3I(16*SrcCharSize.X-1, Y*SrcCharSize.Y+SrcCharSize.Y\2, SrcCharSize.Z-1)
+    Next Y
+    VoxVolumeUnlock
+End Sub
+
+Sub Vox_Font.RenderText(St As String)
+    Dim As Vec3I A, B
+    For I As Integer = 0 To Len(St)-1
+        If I < Len(St) - 1 AndAlso (St[I] = 13 And St[I+1] = 10) Then
+            B.X = 0
+            B.Y -= DestCharSize.Y
+            I += 1
+            Continue For
+        End If
+        If St[I] = 13 Then
+            B.X = 0
+            B.Y -= DestCharSize.Y
+            Continue For
+        End If
+        A = Vec3I((St[I] Mod 16)*SrcCharSize.X, (15 - St[I] \ 16)*SrcCharSize.Y, 0)
+        glTranslatef B.X-A.X, B.Y-A.Y, B.Z-A.Z
+        VoxRenderSubVolume VolFont, A, A + SrcCharSize-Vec3I(1,1,1)
+        glTranslatef A.X-B.X, A.Y-B.Y, A.Z-B.Z
+        B.X += DestCharSize.X
+    Next I
+End Sub
+
+Sub Vox_Font.BlitText(St As String)
+    Dim As Vec3I A, B
+    VoxSetSource VolFont
+    For I As Integer = 0 To Len(St)-1
+        If I < Len(St) - 1 AndAlso (St[I] = 13 And St[I+1] = 10) Then
+            B.X = 0
+            B.Y -= DestCharSize.Y
+            I += 1
+            Continue For
+        End If
+        If St[I] = 13 Then
+            B.X = 0
+            B.Y -= DestCharSize.Y
+            Continue For
+        End If
+        A = Vec3I((St[I] Mod 16)*SrcCharSize.X, (15 - St[I] \ 16)*SrcCharSize.Y, 0)
+        VoxBlit B, A, SrcCharSize
+        B.X += DestCharSize.X
+    Next I
+End Sub
+
 Constructor Vec3L16()
     X = 0
     Y = 0

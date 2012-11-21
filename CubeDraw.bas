@@ -389,6 +389,11 @@ Sub VoxelEditor.LeftClick(X As Integer, Y As Integer)
             If V2.Y-V1.Y <> 0 Then CutPlane = VOXEL_AXIS_Y: CutPosn.Y = V1.Y+IIf(CutSide = 1, 1, 0)
             If V2.Z-V1.Z <> 0 Then CutPlane = VOXEL_AXIS_Z: CutPosn.Z = V1.Z+IIf(CutSide = 1, 1, 0)
             If OldPosn = CutPosn Then CutPlane = 0: CutPosn = Vec3I(-1,-1,-1)
+            If CutSide = 1 Then
+                If CutPosn.V(CutPlane-1) <= 0 Then CutPlane = 0: CutPosn = Vec3I(-1,-1,-1)
+               Else
+                If CutPosn.V(CutPlane-1) >= HitP.Size.V(CutPlane-1) Then CutPlane = 0: CutPosn = Vec3I(-1,-1,-1)
+            End If
         End Select
     End If
     
@@ -498,6 +503,22 @@ Scope
     Dim VE As VoxelEditor
     
     SDL_WM_SetCaption VE.ModelSize & " " & FileName, ""
+    
+    'Dim Font As Vox_Font
+    'Font.SetFont VoxLoadFile("VoxFont.png")
+    ''VoxTriangle Vec3I(0, 137, 4), Vec3I(160, 137, 0), Vec3I(160, 137, 4)
+    'Font.SetForeColor RGB(0,128,0)
+    'Font.SetForeColor RGB(255,255,0)
+    'Font.Underline
+    ''Font.Bold
+    ''Font.StrikeThrough
+    'VoxSetVolume VOXEL_SCREEN
+    'VoxSetBlitDefault
+    ''VoxBlitRightRotate VOXEL_AXIS_Y
+    ''VoxBlitReflect VOXEL_AXIS_Y
+    'Font.BlitText "Voxel"
+    ''VoxGlRenderState 0, 0, VOXEL_MODELVIEW
+    ''Font.RenderText "Hi" & Chr(13) & "YOU!!"
     
     'Main message loop
     Dim As Double PrevT = Timer, dT = 0.1, T = Timer

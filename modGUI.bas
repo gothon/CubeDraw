@@ -595,7 +595,7 @@ Sub HitPlanes.SetSize()
         VoxSetColor RGB(32, 32, 32)
         DrawGrid Vec3I(0,0,0), Vec3I(0, Size.Y*2-2, Size.Z*2-2), 4
         VoxSetColor RGB(64, 64, 64)
-        DrawGrid Vec3I(0,0,0), Vec3I(0, Size.Y*2-2, Size.Z*2-2), 8
+        DrawGrid Vec3I(0,0,0), Vec3I(0, Size.Y*2-2, Size.Z*2-2), 20
     End If
     VoxSetColor RGB(196, 196, 196)
     DrawCubeEdges Vec3I(0,0,0), Vec3I(0, Size.Y*2-2, Size.Z*2-2)
@@ -608,7 +608,7 @@ Sub HitPlanes.SetSize()
         VoxSetColor RGB(32, 32, 32)
         DrawGrid Vec3I(0,0,0), Vec3I(Size.X*2-2, 0, Size.Z*2-2), 4
         VoxSetColor RGB(64, 64, 64)
-        DrawGrid Vec3I(0,0,0), Vec3I(Size.X*2-2, 0, Size.Z*2-2), 8
+        DrawGrid Vec3I(0,0,0), Vec3I(Size.X*2-2, 0, Size.Z*2-2), 20
     End If
     VoxSetColor RGB(196, 196, 196)
     DrawCubeEdges Vec3I(0,0,0), Vec3I(Size.X*2-2, 0, Size.Z*2-2)
@@ -621,7 +621,7 @@ Sub HitPlanes.SetSize()
         VoxSetColor RGB(32, 32, 32) 'RGB(128, 128, 128)
         DrawGrid Vec3I(0,0,0), Vec3I(Size.X*2-2, Size.Y*2-2, 0), 4
         VoxSetColor RGB(64, 64, 64) 'RGB(196, 196, 196)
-        DrawGrid Vec3I(0,0,0), Vec3I(Size.X*2-2, Size.Y*2-2, 0), 8
+        DrawGrid Vec3I(0,0,0), Vec3I(Size.X*2-2, Size.Y*2-2, 0), 20
     End If
     VoxSetColor RGB(196, 196, 196) 'RGB(255, 255, 255)
     DrawCubeEdges Vec3I(0,0,0), Vec3I(Size.X*2-2, Size.Y*2-2, 0)

@@ -23,6 +23,7 @@
 #Include "GL/glu.bi"
 
 #Define DEG (Atn(1)/45.0)
+#Define SwapRB(C) (CUInt(C) Shr 16 And &HFF Or (CUInt(C) And &HFF) Shl 16 Or CUInt(C) And &HFF00FF00)
 
 Type Vox_Model
     Volume As Vox_Volume = VOXEL_SCREEN
@@ -45,6 +46,22 @@ Type Vox_Model
     Declare Sub Scale(V As Vec3I)
     Declare Sub Rotate(Angle As Double, NX As Double, NY As Double, NZ As Double)
     Declare Sub Rotate(Angle As Double, N As Vec3I)
+End Type
+
+Type Vox_Font
+    As Vox_Volume VolFont
+    As Vec3I SrcCharSize, DestCharSize
+    As UInteger ForeColor = RGB(255,255,255)
+    
+    Declare Sub SetFont(Vol As Vox_Volume)
+    Declare Sub SetForeColor(Col As UInteger)
+    Declare Sub Bold
+    Declare Sub Italize
+    Declare Sub Underline
+    Declare Sub StrikeThrough
+        
+    Declare Sub RenderText(St As String)
+    Declare Sub BlitText(St As String)
 End Type
 
 ' 3D vector of 64 bit integers representing 48:16 fixed point numbers
