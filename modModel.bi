@@ -48,7 +48,7 @@ Type Vox_Model
     Declare Sub Rotate(Angle As Double, N As Vec3I)
 End Type
 
-Type Vox_Font
+Type VoxFont
     As Vox_Volume VolFont
     As Vec3I SrcCharSize, DestCharSize
     As UInteger ForeColor = RGB(255,255,255)

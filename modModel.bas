@@ -121,7 +121,7 @@ Sub Vox_Model.Rotate(Angle As Double, N As Vec3I)
     Rotate Angle, N.X, N.Y, N.Z
 End Sub
 
-Sub Vox_Font.SetFont(Vol As Vox_Volume)
+Sub VoxFont.SetFont(Vol As Vox_Volume)
     VolFont = Vol
     SrcCharSize = VoxGetVolumeSize(Vol)
     SrcCharSize.X \= 16
@@ -129,7 +129,7 @@ Sub Vox_Font.SetFont(Vol As Vox_Volume)
     DestCharSize = SrcCharSize
 End Sub
 
-Sub Vox_Font.SetForeColor(ByVal Col As UInteger)
+Sub VoxFont.SetForeColor(ByVal Col As UInteger)
     ForeColor = SwapRB(ForeColor)
     Col = SwapRB(Col)
     VoxSetVolume VolFont
@@ -143,7 +143,7 @@ Sub Vox_Font.SetForeColor(ByVal Col As UInteger)
     ForeColor = SwapRB(Col)
 End Sub
 
-Sub Vox_Font.Bold
+Sub VoxFont.Bold
     ForeColor = SwapRB(ForeColor)
     VoxSetVolume VolFont
     VoxVolumeLock
@@ -156,7 +156,7 @@ Sub Vox_Font.Bold
     ForeColor = SwapRB(ForeColor)
 End Sub
 
-Sub Vox_Font.Italize
+Sub VoxFont.Italize
     Var Temp = VoxNewVolume((3*SrcCharSize.X\2)*16, SrcCharSize.Y*16, SrcCharSize.Z)
     VoxSetSource VolFont
     
@@ -165,7 +165,7 @@ Sub Vox_Font.Italize
     VoxSizeVolume 0, 0, 0
 End Sub
 
-Sub Vox_Font.Underline
+Sub VoxFont.Underline
     VoxSetVolume VolFont
     VoxSetColor ForeColor
     VoxVolumeLock
@@ -176,7 +176,7 @@ Sub Vox_Font.Underline
     VoxVolumeUnlock
 End Sub
 
-Sub Vox_Font.StrikeThrough
+Sub VoxFont.StrikeThrough
     VoxSetVolume VolFont
     VoxSetColor ForeColor
     VoxVolumeLock
@@ -187,7 +187,7 @@ Sub Vox_Font.StrikeThrough
     VoxVolumeUnlock
 End Sub
 
-Sub Vox_Font.RenderText(St As String)
+Sub VoxFont.RenderText(St As String)
     Dim As Vec3I A, B
     For I As Integer = 0 To Len(St)-1
         If I < Len(St) - 1 AndAlso (St[I] = 13 And St[I+1] = 10) Then
@@ -209,7 +209,7 @@ Sub Vox_Font.RenderText(St As String)
     Next I
 End Sub
 
-Sub Vox_Font.BlitText(St As String)
+Sub VoxFont.BlitText(St As String)
     Dim As Vec3I A, B
     VoxSetSource VolFont
     For I As Integer = 0 To Len(St)-1
